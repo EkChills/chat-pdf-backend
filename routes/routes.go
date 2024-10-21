@@ -6,5 +6,6 @@ import (
 
 
 func RegisterRoutes(server *gin.Engine) {
+	
 	server.POST("/upload", UploadPdfs)
 }
