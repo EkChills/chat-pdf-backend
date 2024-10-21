@@ -48,8 +48,27 @@ func createTables() (error) {
 		)
 	`
 
-	_, err := DB.Exec(query)
+	createPdfTable := `
+	CREATE TABLE IF NOT EXISTS pdf (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	pdfText TEXT,
+	userId INTEGER 
+	FOREIGN KEY (userId) REFERENCES user(id)
+	)
+	`
 
-	return err
+	var querySlice []string = []string{query, createPdfTable}  
+
+	for _, item := range querySlice {
+		_, err := DB.Exec(item)
+
+		if err != nil {
+			fmt.Println("error creating table: ", err)
+			return err
+		}
+		
+	}
+
+	return nil
 
 }
